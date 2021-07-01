@@ -32,9 +32,7 @@ class Problem_1
   {
     double alpha = 1.1 + (Math.Pow((120-hw),2)/3000);
     if ( hw > 120 )
-    {
       alpha = 1.0 ;
-    }
     
     double[] converted_values = new double[4];
     converted_values[0] = hw - (hw/9.2) + 2 ;
@@ -51,12 +49,8 @@ class Problem_1
     double AH2 = ((tf*bf)*Math.Pow((hw+tf/2)-na,2) + (hw*tw)*Math.Pow((hw/2)-na,2)) ;
     double MOI = (bf*Math.Pow(bf,3)/12) + (tw*Math.Pow((tw-tf),3)/12) + AH2 ;
     if (opt == 1)
-    {
       return area ;
-    }
     else
-    {
       return MOI ;
-    }
   }
 }
