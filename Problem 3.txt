@@ -1,0 +1,133 @@
+using System;
+
+class Problem_3
+{
+  public static void Main (string[] args) 
+  {
+    Console.WriteLine ("1. Angle profile \n2. T-Profile \n3. Flat Bar \n4. Bulb Profile");
+
+    Console.WriteLine ("Choose the type of stiffener");
+    int sw = Convert.ToInt32(Console.ReadLine());
+
+    double[] vals = new double[4] ;
+
+    switch (sw)
+    {
+      case 1:
+      {
+        vals = Problem_3.A ();
+        Problem_3.properties(vals);
+        break;
+      }
+      case 2:
+      {
+        vals = Problem_3.T ();
+        Problem_3.properties(vals);
+        break;
+      }
+      case 3:
+      {
+        vals = Problem_3.F ();
+        Problem_3.properties(vals);
+        break;
+      }
+      case 4:
+      {
+        vals = Problem_3.B ();
+        Problem_3.properties(vals);
+        break;
+      }
+      default:
+      {
+        Console.WriteLine("Wrong Choice!!") ;
+        break;
+      }
+    }
+  }
+
+  public static double[] A()
+  {
+    Console.WriteLine ("Enter web height (in mm)");
+    double hw = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter web thickness (in mm)");
+    double tw = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter flange thickness (in mm)");
+    double tf = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter flange width (in mm)");
+    double bf = Convert.ToDouble(Console.ReadLine());
+    
+    double[] values = {hw, tw, bf, tf};
+
+    return values;
+  }
+
+  public static double[] T()
+  {
+    Console.WriteLine ("Enter web height (in mm)");
+    double hw = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter web thickness (in mm)");
+    double tw = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter flange thickness (in mm)");
+    double tf = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter left flange width (in mm)");
+    double blf = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter right flange width (in mm)");
+    double brf = Convert.ToDouble(Console.ReadLine());
+
+    double bf = blf + brf + tw ;
+
+    double[] values = {hw, tw, bf, tf} ;
+
+    return values;
+  }
+
+  public static double[] F()
+  {
+    Console.WriteLine ("Enter height bar (in mm)");
+    double height = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter thickness of bar (in mm)");
+    double width = Convert.ToDouble(Console.ReadLine());
+
+    double[] values = {height, width, 0, 0} ;
+    
+    return values;
+  }
+
+  public static double[] B()
+  {
+    Console.WriteLine ("Enter net height of the bulb (in mm)");
+    double hw = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter net width of the bulb (in mm)");
+    double tw = Convert.ToDouble(Console.ReadLine());
+
+    double alpha = 1.1 + (Math.Pow((120-hw),2)/3000);
+    if ( hw > 120 )
+    {
+      alpha = 1.0 ;
+    }
+    
+    double[] converted_values = new double[4];
+    converted_values[0] = hw - (hw/9.2) + 2 ;
+    converted_values[1] = tw ;
+    converted_values[2] = (tw + (hw/6.7) - 2)*alpha ;
+    converted_values[3] = (hw/9.2) - 2 ;
+
+    return converted_values;
+  }
+
+  public static void properties (double[] vals)
+  {
+    double hw = vals[0];
+    double tw = vals[1];
+    double bf = vals[2];
+    double tf = vals[3];
+
+    double area = (tf*bf) + (hw*tw) ;
+    double na = ((tf*bf)*(hw+tf/2) + (hw*tw)*(hw/2))/area ;
+    double AH2 = ((tf*bf)*Math.Pow((hw+tf/2)-na,2) + (hw*tw)*Math.Pow((hw/2)-na,2)) ;
+    double MOI = (bf*Math.Pow(bf,3)/12) + (tw*Math.Pow((tw-tf),3)/12) + AH2 ;
+
+    Console.WriteLine ("Cross sectional area = "+area);
+    Console.WriteLine ("Moment of Inertia about Neutral Axis = "+MOI);
+  }
+}
