@@ -1,0 +1,31 @@
+using System;
+
+class Problem_2 
+{
+  public static void Main (string[] args) 
+  {
+    Console.WriteLine ("The 2 vectors are \n A = cj + dk \n B = pj + qk");
+
+    Console.WriteLine ("Enter value of 'c' =");
+    double c = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter value of 'd' =");
+    double d = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter value of 'p' =");
+    double p = Convert.ToDouble(Console.ReadLine());
+    Console.WriteLine ("Enter value of 'q' =");
+    double q = Convert.ToDouble(Console.ReadLine());
+
+    double angle = Problem_2.calc(c, d, p, q) ;
+    Console.WriteLine ("The angle between 2 vectors are = "+angle);
+  }
+
+  public static double calc(double c, double d, double p, double q)
+  {
+    double dot = (c*p) + (d*q);
+    double cross = (c*q) - (d*p);
+    double angle = Math.Atan2(cross, dot) * 180/Math.PI ;
+    if (angle < 0)
+      angle = 360 + angle ;
+    return angle;
+  }
+}
